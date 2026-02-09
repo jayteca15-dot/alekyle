@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https://api.web3forms.com https:;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>AleKyle Connect | Premium Services</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='41' font-family='Arial, sans-serif' font-size='24' font-weight='800' text-anchor='middle' fill='white'%3EAK%3C/text%3E%3C/svg%3E" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        .hero-gradient {
+            background: linear-gradient(-45deg, #0f172a, #1e3a5f, #0f766e, #1e40af, #7c3aed);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-3d {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            transform-style: preserve-3d;
+        }
+        .card-3d:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+        .glow { box-shadow: 0 0 60px rgba(59, 130, 246, 0.5); }
+        .glow-text { text-shadow: 0 0 40px rgba(255,255,255,0.5); }
+
+        .fade-up { opacity: 0; transform: translateY(40px); animation: fadeUp 1s ease forwards; }
+        .fade-up-delay-1 { animation-delay: 0.2s; }
+        .fade-up-delay-2 { animation-delay: 0.4s; }
+        .fade-up-delay-3 { animation-delay: 0.6s; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .particles { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: particleFloat 20s infinite;
+        }
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .btn-premium:hover::before { left: 100%; }
+        .btn-premium:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+        .nav-glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); }
+
+        .gradient-border { position: relative; background: white; }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+            z-index: -1;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-slate-900">
+    <!-- Navigation -->
+    <nav class="fixed w-full nav-glass shadow-2xl z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="home.html" class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">AleKyle Connect</span>
+                </a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="home.html" class="px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow-lg">Home</a>
+                    <a href="index.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Shuttle</a>
+                    <a href="courier.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Courier</a>
+                    <a href="decor.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Decor</a>
+                    <a href="mentor.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Mentorship</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-bars text-gray-700 text-xl"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden md:hidden pb-6 space-y-2">
+                <a href="home.html" class="block py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium">Home</a>
+                <a href="index.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Shuttle</a>
+                <a href="courier.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Courier</a>
+                <a href="decor.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Decor</a>
+                <a href="mentor.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Mentorship</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="particles">
+            <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+            <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+            <div class="particle" style="left: 80%; animation-delay: 1.5s;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 4.5s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 text-center text-white relative z-10 pt-20">
+            <div class="float mb-8 fade-up">
+                <div class="w-32 h-32 mx-auto bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center glow border border-white/20">
+                    <i class="fas fa-rocket text-6xl text-white"></i>
+                </div>
+            </div>
+
+            <h1 class="text-5xl md:text-8xl font-black mb-6 fade-up fade-up-delay-1 glow-text tracking-tight">
+                AleKyle <span class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Connect</span>
+            </h1>
+
+            <p class="text-xl md:text-3xl mb-4 opacity-90 fade-up fade-up-delay-2 font-light">
+                Elevating Your Life Through <span class="font-semibold">Excellence</span>
+            </p>
+
+            <p class="text-lg md:text-xl mb-12 opacity-70 max-w-3xl mx-auto fade-up fade-up-delay-3">
+                Your premium partner for transportation, delivery, event decorations, and professional mentorship
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 fade-up fade-up-delay-3">
+                <a href="#services" class="btn-premium bg-white text-slate-900 px-10 py-4 rounded-full font-bold text-lg shadow-2xl inline-flex items-center">
+                    Explore Services <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+                <a href="#contact" class="btn-premium glass px-10 py-4 rounded-full font-bold text-lg inline-flex items-center">
+                    Contact Us <i class="fas fa-phone ml-3"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 fade-up fade-up-delay-3">
+                <div class="stat-card rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black text-cyan-400">500+</div>
+                    <div class="text-white/70 text-sm mt-1">Happy Clients</div>
+                </div>
+                <div class="stat-card rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black text-purple-400">4</div>
+                    <div class="text-white/70 text-sm mt-1">Services</div>
+                </div>
+                <div class="stat-card rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black text-pink-400">24/7</div>
+                    <div class="text-white/70 text-sm mt-1">Support</div>
+                </div>
+                <div class="stat-card rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black text-amber-400">100%</div>
+                    <div class="text-white/70 text-sm mt-1">Satisfaction</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <div class="w-8 h-14 border-2 border-white/30 rounded-full flex justify-center">
+                <div class="w-2 h-4 bg-white rounded-full mt-2 animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-32 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-20">
+                <span class="text-cyan-400 font-semibold text-lg tracking-widest uppercase">What We Offer</span>
+                <h2 class="text-4xl md:text-6xl font-black text-white mt-4 mb-6">Our Premium Services</h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Experience excellence across all our carefully crafted services designed to elevate every aspect of your life</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="index.html" class="card-3d group">
+                    <div class="h-full bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl p-10 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500">
+                                <i class="fas fa-shuttle-van text-4xl"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">Shuttle Service</h3>
+                            <p class="text-blue-200 mb-6">Point-to-Point Transportation</p>
+                            <p class="text-lg opacity-90 mb-8">Travel comfortably from any location to your desired destination with our premium shuttle service.</p>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-cyan-400"></i> Any pickup location</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-cyan-400"></i> Any destination</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-cyan-400"></i> Modern fleet</li>
+                            </ul>
+                            <div class="flex items-center font-semibold text-lg group-hover:translate-x-3 transition">
+                                Book Now <i class="fas fa-arrow-right ml-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="courier.html" class="card-3d group">
+                    <div class="h-full bg-gradient-to-br from-emerald-600 via-green-600 to-teal-700 rounded-3xl p-10 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500">
+                                <i class="fas fa-box text-4xl"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">Courier Service</h3>
+                            <p class="text-green-200 mb-6">Pretoria Parcel Delivery</p>
+                            <p class="text-lg opacity-90 mb-8">Fast and reliable parcel delivery within Pretoria. Operating Friday to Sunday.</p>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-emerald-300"></i> Same-day delivery</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-emerald-300"></i> Secure handling</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-emerald-300"></i> Real-time updates</li>
+                            </ul>
+                            <div class="flex items-center font-semibold text-lg group-hover:translate-x-3 transition">
+                                Send Parcel <i class="fas fa-arrow-right ml-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="decor.html" class="card-3d group">
+                    <div class="h-full bg-gradient-to-br from-pink-600 via-purple-600 to-indigo-700 rounded-3xl p-10 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500">
+                                <i class="fas fa-gift text-4xl"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">Party & Event Decor</h3>
+                            <p class="text-pink-200 mb-6">Beautiful Decorations</p>
+                            <p class="text-lg opacity-90 mb-8">Transform your special occasions into unforgettable memories with stunning decorations.</p>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-pink-300"></i> Birthday parties</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-pink-300"></i> Small weddings</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-pink-300"></i> Special functions</li>
+                            </ul>
+                            <div class="flex items-center font-semibold text-lg group-hover:translate-x-3 transition">
+                                Get Quote <i class="fas fa-arrow-right ml-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="mentor.html" class="card-3d group">
+                    <div class="h-full bg-gradient-to-br from-orange-500 via-red-500 to-rose-600 rounded-3xl p-10 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500">
+                                <i class="fas fa-chalkboard-teacher text-4xl"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">Teacher Mentorship</h3>
+                            <p class="text-orange-200 mb-6">Online Professional Guidance</p>
+                            <p class="text-lg opacity-90 mb-8">Empowering young educators to become exceptional teachers through personalized mentorship.</p>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-amber-300"></i> One-on-one sessions</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-amber-300"></i> Experienced mentors</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle mr-3 text-amber-300"></i> 100% online</li>
+                            </ul>
+                            <div class="flex items-center font-semibold text-lg group-hover:translate-x-3 transition">
+                                Start Learning <i class="fas fa-arrow-right ml-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-gradient-to-br from-slate-100 to-slate-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-16 items-start">
+                <div>
+                    <span class="text-blue-600 font-semibold text-lg tracking-widest uppercase">Get In Touch</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4 mb-6">Let's Connect Today</h2>
+                    <p class="text-xl text-gray-600 mb-10">Prefer WhatsApp for quick replies? Or send a detailed message by email form — you choose what works best.</p>
+
+                    <div class="space-y-6">
+                        <a href="tel:+27769079104" class="flex items-center group">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg group-hover:scale-110 transition">
+                                <i class="fas fa-phone text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg">Phone</h4>
+                                <p class="text-gray-600">+27 76 907 9104</p>
+                                <p class="text-gray-600">+27 67 725 3057</p>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/27769079104" target="_blank" class="flex items-center group">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg group-hover:scale-110 transition">
+                                <i class="fab fa-whatsapp text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg">WhatsApp</h4>
+                                <p class="text-gray-600">+27 76 907 9104</p>
+                            </div>
+                        </a>
+
+                        <a href="mailto:altheawilliams3@gmail.com" class="flex items-center group">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg group-hover:scale-110 transition">
+                                <i class="fas fa-envelope text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg">Email</h4>
+                                <p class="text-gray-600">altheawilliams3@gmail.com</p>
+                                <p class="text-gray-600">alistairdavids@gmail.com</p>
+                            </div>
+                        </a>
+
+                        <a href="https://www.google.com/maps/place/Pretoria,+South+Africa" target="_blank" class="flex items-center group">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mr-6 shadow-lg group-hover:scale-110 transition">
+                                <i class="fas fa-map-marker-alt text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg">Location</h4>
+                                <p class="text-gray-600">Pretoria, South Africa</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hybrid: WhatsApp + Email -->
+                <div class="grid gap-6">
+                    <div class="rounded-3xl p-1 bg-gradient-to-br from-green-400 via-emerald-500 to-green-700 shadow-2xl">
+                        <div class="bg-white rounded-3xl p-10">
+                            <div class="flex items-start justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">Quick WhatsApp Chat</h3>
+                                    <p class="text-gray-600 mt-2">Click to open WhatsApp with a ready-to-send message.</p>
+                                </div>
+                                <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center">
+                                    <i class="fab fa-whatsapp text-green-600 text-3xl"></i>
+                                </div>
+                            </div>
+
+                            <div class="bg-green-50 border border-green-100 rounded-2xl p-5 mb-7">
+                                <ul class="space-y-3 text-gray-800">
+                                    <li class="flex items-center"><i class="fas fa-bolt text-green-600 mr-3"></i> Fast replies</li>
+                                    <li class="flex items-center"><i class="fas fa-list-check text-green-600 mr-3"></i> Easy to share details</li>
+                                    <li class="flex items-center"><i class="fas fa-location-dot text-green-600 mr-3"></i> Send location pin instantly</li>
+                                </ul>
+                            </div>
+
+                            <button id="whatsappHomeBtn" class="w-full btn-premium bg-gradient-to-r from-green-500 to-emerald-600 text-white py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition inline-flex items-center justify-center">
+                                <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+                                Message on WhatsApp
+                                <i class="fas fa-arrow-right ml-3"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="gradient-border rounded-3xl p-1">
+                        <div class="bg-white rounded-3xl p-10 shadow-2xl">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Send Us a Message (Email)</h3>
+                            <p class="text-gray-600 mb-8">Prefer email? Fill in the form and we’ll respond as soon as possible.</p>
+
+                            <form id="contactForm" class="space-y-5" action="https://api.web3forms.com/submit" method="POST">
+                                <input type="hidden" name="access_key" value="c4c88544-223e-466f-9735-b3fe7472d347">
+                                <input type="hidden" name="from_name" value="AleKyle Connect Website">
+                                <input type="hidden" name="to_email" value="altheawilliams3@gmail.com">
+                                <input type="hidden" name="subject" value="Website Contact Message">
+                                <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+                                <input id="hName" name="name" type="text" placeholder="Your Name" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg" required>
+                                <input id="hEmail" name="email" type="email" placeholder="Email Address" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg" required>
+                                <input id="hPhone" name="phone" type="tel" placeholder="Phone Number" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg">
+                                <select id="hService" name="service" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg" required>
+                                    <option value="">Select Service of Interest</option>
+                                    <option value="Shuttle Service">Shuttle Service</option>
+                                    <option value="Courier Service">Courier Service</option>
+                                    <option value="Party & Event Decor">Party & Event Decor</option>
+                                    <option value="Teacher Mentorship">Teacher Mentorship</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                </select>
+                                <textarea id="hMessage" name="message" placeholder="Your Message" rows="4" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg" required></textarea>
+
+                                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-5 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-[1.02] transition">
+                                    Send Message <i class="fas fa-paper-plane ml-2"></i>
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-rocket text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold">AleKyle Connect</span>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">Elevating your life through reliable transportation, delivery, stunning event decor, and professional mentorship.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Our Services</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="index.html" class="hover:text-white transition flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Shuttle Service</a></li>
+                        <li><a href="courier.html" class="hover:text-white transition flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Courier Delivery</a></li>
+                        <li><a href="decor.html" class="hover:text-white transition flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Party Decorations</a></li>
+                        <li><a href="mentor.html" class="hover:text-white transition flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Teacher Mentorship</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Contact Info</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="tel:+27769079104" class="flex items-center hover:text-white transition"><i class="fas fa-phone mr-3 text-blue-400"></i> +27 76 907 9104</a></li>
+                        <li><a href="tel:+27677253057" class="flex items-center hover:text-white transition"><i class="fas fa-phone mr-3 text-cyan-400"></i> +27 67 725 3057</a></li>
+                        <li><a href="mailto:altheawilliams3@gmail.com" class="flex items-center hover:text-white transition"><i class="fas fa-envelope mr-3 text-purple-400"></i> altheawilliams3@gmail.com</a></li>
+                        <li><a href="mailto:alistairdavids@gmail.com" class="flex items-center hover:text-white transition"><i class="fas fa-envelope mr-3 text-pink-400"></i> alistairdavids@gmail.com</a></li>
+                        <li><a href="https://www.google.com/maps/place/Pretoria,+South+Africa" target="_blank" class="flex items-center hover:text-white transition"><i class="fas fa-map-marker-alt mr-3 text-orange-400"></i> Pretoria, South Africa</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/" target="_blank" class="w-12 h-12 bg-white/10 hover:bg-blue-600 rounded-xl flex items-center justify-center transition"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="https://wa.me/27769079104" target="_blank" class="w-12 h-12 bg-white/10 hover:bg-green-600 rounded-xl flex items-center justify-center transition"><i class="fab fa-whatsapp text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 text-center text-gray-400">
+                <p>&copy; <span id="currentYear"></span> AleKyle Connect. All rights reserved.</p>
+            </div>
+            <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+        </div>
+    </footer>
+
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-3xl p-10 max-w-md mx-4 text-center transform scale-95 animate-[fadeUp_0.3s_ease_forwards]">
+            <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-white text-4xl"></i>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-3">Message Sent!</h3>
+            <p class="text-gray-600 mb-8 text-lg">Thank you for contacting AleKyle Connect. We'll get back to you soon!</p>
+            <button onclick="closeModal()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const WA_NUMBER = '27769079104';
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = contactForm.querySelector('button[type="submit"]');
+            const prev = btn.innerHTML;
+            let sent = false;
+            btn.disabled = true;
+            btn.innerHTML = 'Sending...';
+
+            // Set reply-to for Web3Forms (optional but helpful)
+            const emailVal = (document.getElementById('hEmail')?.value || '').trim();
+            let reply = contactForm.querySelector('input[name="replyto"]');
+            if (!reply) {
+                reply = document.createElement('input');
+                reply.type = 'hidden';
+                reply.name = 'replyto';
+                contactForm.appendChild(reply);
+            }
+            reply.value = emailVal;
+
+            try {
+                const res = await fetch(contactForm.action, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(contactForm)
+                });
+
+                let data = null;
+                try { data = await res.json(); } catch { data = null; }
+
+                if (!res.ok) {
+                    throw new Error((data && data.message) ? data.message : `Request failed (${res.status})`);
+                }
+                if (data && data.success === false) {
+                    throw new Error(data.message || 'Submission failed');
+                }
+
+                sent = true;
+                contactForm.reset();
+            } catch (err) {
+                console.error('Web3Forms error:', err);
+                alert(`Email could not be sent. ${err?.message || ''} Please try again or use WhatsApp.`);
+            } finally {
+                if (sent) {
+                    btn.innerHTML = 'Sent!';
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = prev;
+                    }, 1200);
+                } else {
+                    btn.disabled = false;
+                    btn.innerHTML = prev;
+                }
+            }
+        });
+
+        // WhatsApp quick chat (prefill from email form fields)
+        document.getElementById('whatsappHomeBtn').addEventListener('click', () => {
+            const name = (document.getElementById('hName')?.value || '').trim();
+            const phone = (document.getElementById('hPhone')?.value || '').trim();
+            const email = (document.getElementById('hEmail')?.value || '').trim();
+            const service = (document.getElementById('hService')?.value || '').trim();
+            const message = (document.getElementById('hMessage')?.value || '').trim();
+
+            const text = [
+                'Hi AleKyle Connect! I would like to enquire:',
+                `Name: ${name}`,
+                `Phone: ${phone}`,
+                `Email: ${email}`,
+                `Service: ${service}`,
+                `Message: ${message}`
+            ].join('\n');
+
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+        });
+
+        // Intersection Observer for service card scroll animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.card-3d').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(40px)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.320, 1)';
+            observer.observe(card);
+        });
+
+        // Global Book menu (floating button)
+        (function () {
+            if (document.getElementById('globalBookOverlay')) return;
+
+            const html = `
+                <div id="globalBookFab" class="fixed bottom-6 right-6 z-[81]">
+                    <button id="globalBookBtn" type="button" class="btn-premium bg-gradient-to-r from-slate-900 to-slate-800 text-white px-6 py-4 rounded-full font-extrabold text-base shadow-2xl inline-flex items-center">
+                        <i class="fas fa-calendar-check mr-3"></i>
+                        Book
+                    </button>
+                </div>
+
+                <div id="globalBookOverlay" class="fixed inset-0 z-[80] hidden" aria-hidden="true">
+                    <button type="button" data-book-overlay-bg class="absolute inset-0 w-full h-full bg-black/50 backdrop-blur-sm"></button>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                        <div id="globalBookPanel" class="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 transition-all duration-300 ease-out translate-y-10 opacity-0">
+                            <div class="px-6 py-5 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs opacity-80 tracking-widest uppercase">AleKyle Connect</div>
+                                    <div class="text-2xl font-black">Book a Service</div>
+                                </div>
+                                <button id="globalBookClose" type="button" class="w-11 h-11 rounded-2xl bg-white/10 hover:bg-white/20 transition flex items-center justify-center" aria-label="Close booking menu">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <div class="p-6 grid sm:grid-cols-2 gap-4">
+                                <a href="index.html#book" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-shuttle-van"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Shuttle</div>
+                                        <div class="text-sm text-gray-600">Airport, events, tours & more</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-blue-600 transition"></i>
+                                </a>
+
+                                <a href="courier.html#send" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-green-700 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Courier</div>
+                                        <div class="text-sm text-gray-600">Pretoria parcels (Fri–Sun)</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-emerald-600 transition"></i>
+                                </a>
+
+                                <a href="decor.html#quote" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-pink-200 hover:bg-pink-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Decor</div>
+                                        <div class="text-sm text-gray-600">Parties, functions & weddings</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-pink-600 transition"></i>
+                                </a>
+
+                                <a href="mentor.html#book" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Mentorship</div>
+                                        <div class="text-sm text-gray-600">Online teacher guidance</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-orange-600 transition"></i>
+                                </a>
+
+                                <a href="https://wa.me/27769079104" target="_blank" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-green-200 hover:bg-green-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">WhatsApp</div>
+                                        <div class="text-sm text-gray-600">Fastest response</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-green-600 transition"></i>
+                                </a>
+
+                                <a href="home.html#contact" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-slate-200 hover:bg-slate-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Contact</div>
+                                        <div class="text-sm text-gray-600">Call or send a message</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-slate-800 transition"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', html);
+
+            const overlay = document.getElementById('globalBookOverlay');
+            const panel = document.getElementById('globalBookPanel');
+            const openBtn = document.getElementById('globalBookBtn');
+            const closeBtn = document.getElementById('globalBookClose');
+            const bgBtn = overlay.querySelector('[data-book-overlay-bg]');
+
+            const open = () => {
+                overlay.classList.remove('hidden');
+                overlay.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    panel.classList.remove('translate-y-10', 'opacity-0');
+                    panel.classList.add('translate-y-0', 'opacity-100');
+                });
+            };
+
+            const close = () => {
+                panel.classList.add('translate-y-10', 'opacity-0');
+                panel.classList.remove('translate-y-0', 'opacity-100');
+                overlay.setAttribute('aria-hidden', 'true');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 220);
+            };
+
+            openBtn.addEventListener('click', open);
+            closeBtn.addEventListener('click', close);
+            bgBtn.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !overlay.classList.contains('hidden')) close();
+            });
+        })();
+    </script>
+</body>
+</html>

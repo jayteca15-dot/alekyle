@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https://api.web3forms.com https:;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>AleKyle Connect | Fast Courier Delivery</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='41' font-family='Arial, sans-serif' font-size='24' font-weight='800' text-anchor='middle' fill='white'%3EAK%3C/text%3E%3C/svg%3E" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        .hero-gradient {
+            background: linear-gradient(-45deg, #064e3b, #065f46, #059669, #10b981);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); }
+
+        .card-3d {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        .card-3d:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+        }
+
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .glow { box-shadow: 0 0 60px rgba(16, 185, 129, 0.5); }
+        .glow-text { text-shadow: 0 0 40px rgba(255,255,255,0.5); }
+
+        .fade-up { opacity: 0; transform: translateY(40px); animation: fadeUp 1s ease forwards; }
+        .fade-up-delay-1 { animation-delay: 0.2s; }
+        .fade-up-delay-2 { animation-delay: 0.4s; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .particles { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+        .particle {
+            position: absolute; width: 10px; height: 10px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+            animation: particleFloat 20s infinite;
+        }
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; } 90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .btn-premium {
+            position: relative; overflow: hidden; transition: all 0.4s ease;
+        }
+        .btn-premium:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+        .nav-glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); }
+
+        .gradient-border { position: relative; background: white; }
+        .gradient-border::before {
+            content: ''; position: absolute; inset: -3px; border-radius: inherit;
+            background: linear-gradient(135deg, #10b981, #059669, #047857); z-index: -1;
+        }
+
+        .image-shine { position: relative; overflow: hidden; }
+        .image-shine::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+        }
+        .image-shine:hover::after { left: 100%; }
+
+        .gallery-item {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            overflow: hidden;
+        }
+        .gallery-item:hover { transform: scale(1.05); z-index: 10; }
+        .gallery-item img { transition: transform 0.7s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* Lightbox Modal */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active { opacity: 1; pointer-events: all; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            border-radius: 12px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .lightbox-close:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body class="bg-slate-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full nav-glass shadow-2xl z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="home.html" class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">AleKyle Connect</span>
+                </a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="home.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Home</a>
+                    <a href="index.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Shuttle</a>
+                    <a href="courier.html" class="px-5 py-2 rounded-full bg-gradient-to-r from-emerald-600 to-green-600 text-white font-medium shadow-lg">Courier</a>
+                    <a href="decor.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Decor</a>
+                    <a href="mentor.html" class="px-5 py-2 rounded-full text-gray-700 hover:bg-gray-100 transition font-medium">Mentorship</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-bars text-gray-700 text-xl"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden md:hidden pb-6 space-y-2">
+                <a href="home.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Home</a>
+                <a href="index.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Shuttle</a>
+                <a href="courier.html" class="block py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 text-white font-medium">Courier</a>
+                <a href="decor.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Decor</a>
+                <a href="mentor.html" class="block py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-100">Mentorship</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-[80vh] flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="particles">
+            <div class="particle" style="left: 15%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 35%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 55%; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 75%; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 95%; animation-delay: 3s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 text-center text-white relative z-10">
+            <div class="float mb-8 fade-up">
+                <div class="w-28 h-28 mx-auto bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center glow border border-white/20">
+                    <i class="fas fa-box text-5xl text-white"></i>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 fade-up fade-up-delay-1 glow-text">
+                Fast <span class="bg-gradient-to-r from-emerald-300 to-green-200 bg-clip-text text-transparent">Courier</span> Service
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90 fade-up fade-up-delay-2 max-w-3xl mx-auto">
+                Reliable parcel delivery across Pretoria
+            </p>
+            <div class="glass rounded-full px-8 py-4 inline-flex items-center mb-10 fade-up fade-up-delay-2">
+                <i class="fas fa-calendar-alt text-2xl mr-4 text-emerald-300"></i>
+                <span class="text-xl font-semibold">Operating: Friday - Sunday</span>
+            </div>
+            <br>
+            <a href="#send" class="btn-premium bg-white text-emerald-800 px-10 py-4 rounded-full font-bold text-lg shadow-2xl inline-flex items-center fade-up fade-up-delay-2">
+                Send a Parcel <i class="fas fa-arrow-right ml-3"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Operating Hours Banner -->
+    <section class="bg-emerald-900 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-white text-xl font-semibold">
+                <i class="fas fa-clock mr-3 text-emerald-300"></i>
+                Operating Hours: Friday, Saturday & Sunday | 8:00 AM - 6:00 PM
+            </p>
+        </div>
+    </section>
+
+    <!-- Courier Image Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-emerald-600 font-semibold text-lg tracking-widest uppercase">Our Promise</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4 mb-6">Fast & Secure Delivery</h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">Your parcels are in safe hands with our professional courier team. We ensure every package is handled with care and delivered on time.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-emerald-50 rounded-2xl p-5 card-3d">
+                            <i class="fas fa-lock text-emerald-600 text-2xl mb-3"></i>
+                            <h4 class="font-bold text-gray-800">Secure Handling</h4>
+                        </div>
+                        <div class="bg-emerald-50 rounded-2xl p-5 card-3d">
+                            <i class="fas fa-clock text-emerald-600 text-2xl mb-3"></i>
+                            <h4 class="font-bold text-gray-800">Timely Delivery</h4>
+                        </div>
+                        <div class="bg-emerald-50 rounded-2xl p-5 card-3d">
+                            <i class="fas fa-user-tie text-emerald-600 text-2xl mb-3"></i>
+                            <h4 class="font-bold text-gray-800">Professional Service</h4>
+                        </div>
+                        <div class="bg-emerald-50 rounded-2xl p-5 card-3d">
+                            <i class="fas fa-map-marked-alt text-emerald-600 text-2xl mb-3"></i>
+                            <h4 class="font-bold text-gray-800">Pretoria Coverage</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-shine rounded-3xl overflow-hidden shadow-2xl cursor-pointer" onclick="window.open('https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=1200&q=90', '_blank')">
+                    <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&q=80" alt="Courier Delivery Service" class="w-full h-96 object-cover hover:scale-105 transition duration-700">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition bg-black/30 rounded-3xl">
+                        <i class="fas fa-search-plus text-white text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-gradient-to-br from-slate-900 to-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-400 font-semibold text-lg tracking-widest uppercase">Why Choose Us</span>
+                <h2 class="text-4xl md:text-5xl font-black text-white mt-4">The AleKyle Advantage</h2>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:scale-110 transition duration-500">
+                        <i class="fas fa-bolt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Same-Day Delivery</h3>
+                    <p class="text-gray-400">Get your parcels delivered on the same day</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:scale-110 transition duration-500">
+                        <i class="fas fa-map-marked-alt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Pretoria Coverage</h3>
+                    <p class="text-gray-400">Full coverage across Pretoria area</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:scale-110 transition duration-500">
+                        <i class="fas fa-hand-holding-heart text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Careful Handling</h3>
+                    <p class="text-gray-400">Your parcels are handled with care</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-lime-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:scale-110 transition duration-500">
+                        <i class="fas fa-mobile-alt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Real-Time Updates</h3>
+                    <p class="text-gray-400">We confirm pickup and delivery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24 bg-emerald-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-semibold text-lg tracking-widest uppercase">Process</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4">How It Works</h2>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center relative">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-3xl font-black">1</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Request Pickup</h3>
+                    <p class="text-gray-600">Send your pickup & delivery details</p>
+                </div>
+                <div class="text-center relative">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-3xl font-black">2</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Confirmation</h3>
+                    <p class="text-gray-600">We confirm the pickup time and price</p>
+                </div>
+                <div class="text-center relative">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-3xl font-black">3</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">We Collect</h3>
+                    <p class="text-gray-600">Courier picks up your parcel</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-3xl font-black">4</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Delivered</h3>
+                    <p class="text-gray-600">Safe delivery to the recipient</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-semibold text-lg tracking-widest uppercase">Our Work</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4">Courier Service Gallery</h2>
+                <p class="text-gray-600 text-lg mt-4">See our professional delivery service in action</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="gallery-item rounded-2xl h-64 shadow-xl relative group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="Courier Service 1" class="w-full h-full object-cover rounded-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl h-64 shadow-xl relative group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Courier Service 2" class="w-full h-full object-cover rounded-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl h-64 shadow-xl relative group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80" alt="Courier Service 3" class="w-full h-full object-cover rounded-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl h-64 shadow-xl relative group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1605902711834-8b11c3e3ef2f?w=1200&q=90')">
+                    <img src="https://images.unsplash.com/photo-1605902711834-8b11c3e3ef2f?w=800&q=80" alt="Courier Service 4" class="w-full h-full object-cover rounded-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section (Hybrid) -->
+    <section id="send" class="py-24 bg-gradient-to-br from-emerald-50 to-green-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <span class="text-emerald-700 font-semibold text-lg tracking-widest uppercase">Request Pickup</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4">Ready to Send a Parcel?</h2>
+                <p class="text-gray-600 text-lg mt-5 max-w-3xl mx-auto">Get a fast response via WhatsApp, or submit a detailed request by email form.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10 items-start">
+                <!-- WhatsApp Quick Pickup -->
+                <div class="rounded-3xl p-1 bg-gradient-to-br from-green-400 via-emerald-500 to-green-700 shadow-2xl">
+                    <div class="bg-white rounded-3xl p-10 h-full">
+                        <div class="flex items-start justify-between gap-4 mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900">Quick WhatsApp Request</h3>
+                                <p class="text-gray-600 mt-2">Tap to open WhatsApp with a pre-filled pickup request.</p>
+                            </div>
+                            <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center">
+                                <i class="fab fa-whatsapp text-green-600 text-3xl"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-100 rounded-2xl p-5 mb-7">
+                            <ul class="space-y-3 text-gray-800">
+                                <li class="flex items-center"><i class="fas fa-bolt text-green-600 mr-3"></i> Fast response & pricing</li>
+                                <li class="flex items-center"><i class="fas fa-location-dot text-green-600 mr-3"></i> Easy pickup pin & live location</li>
+                                <li class="flex items-center"><i class="fas fa-box text-green-600 mr-3"></i> Share parcel details instantly</li>
+                            </ul>
+                        </div>
+
+                        <button id="whatsappCourierBtn" class="w-full btn-premium bg-gradient-to-r from-green-500 to-emerald-600 text-white py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition inline-flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+                            Request on WhatsApp
+                            <i class="fas fa-arrow-right ml-3"></i>
+                        </button>
+
+                        <div class="mt-8 grid sm:grid-cols-2 gap-4">
+                            <a href="tel:+27769079104" class="bg-gradient-to-r from-emerald-600 to-green-700 text-white rounded-2xl px-6 py-4 font-bold inline-flex items-center justify-center shadow-xl hover:shadow-2xl transition">
+                                <i class="fas fa-phone mr-3"></i> Call
+                            </a>
+                            <a href="tel:+27677253057" class="bg-white border-2 border-gray-200 text-gray-800 rounded-2xl px-6 py-4 font-bold inline-flex items-center justify-center hover:bg-gray-50 transition">
+                                <i class="fas fa-phone mr-3 text-gray-700"></i> Alt Number
+                            </a>
+                        </div>
+
+                        <p class="text-sm text-gray-500 mt-6">Operating area: Pretoria. Operating days: Friday to Sunday.</p>
+                    </div>
+                </div>
+
+                <!-- Email Request Form -->
+                <div class="gradient-border rounded-3xl p-1">
+                    <div class="bg-white rounded-3xl p-10 shadow-2xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Request Pickup (Email)</h3>
+                        <p class="text-gray-600 mb-8">Submit the form and we’ll confirm pickup time and price.</p>
+
+                        <form id="courierForm" class="space-y-5" action="https://api.web3forms.com/submit" method="POST">
+                            <input type="hidden" name="access_key" value="c4c88544-223e-466f-9735-b3fe7472d347">
+                            <input type="hidden" name="from_name" value="AleKyle Connect Website">
+                            <input type="hidden" name="to_email" value="altheawilliams3@gmail.com">
+                            <input type="hidden" name="subject" value="Courier Pickup Request">
+                            <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <input id="cSenderName" name="sender_name" type="text" placeholder="Sender's Full Name" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+                                <input id="cSenderPhone" name="sender_phone" type="tel" placeholder="Sender's Phone Number" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+                            </div>
+                            <input id="cEmail" name="email" type="email" placeholder="Email Address (optional)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg">
+                            <input id="cPickup" name="pickup_address" type="text" placeholder="Pickup Address (Pretoria)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+
+                            <hr class="border-gray-200">
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <input id="cRecipientName" name="recipient_name" type="text" placeholder="Recipient's Full Name" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+                                <input id="cRecipientPhone" name="recipient_phone" type="tel" placeholder="Recipient's Phone Number" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+                            </div>
+
+                            <input id="cDelivery" name="delivery_address" type="text" placeholder="Delivery Address (Pretoria)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+
+                            <select id="cDay" name="delivery_day" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg" required>
+                                <option value="">Select Delivery Day</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+
+                            <textarea id="cParcel" name="parcel_description" placeholder="Parcel Description (size, fragile, etc.)..." rows="3" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-lg"></textarea>
+
+                            <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-green-600 text-white py-5 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-[1.02] transition">
+                                Request Pickup <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-rocket text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold">AleKyle Connect</span>
+                    </div>
+                    <p class="text-gray-400">Elevating your life through premium services.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Services</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="index.html" class="hover:text-white transition">Shuttle Service</a></li>
+                        <li><a href="courier.html" class="hover:text-white transition">Courier Delivery</a></li>
+                        <li><a href="decor.html" class="hover:text-white transition">Party Decorations</a></li>
+                        <li><a href="mentor.html" class="hover:text-white transition">Teacher Mentorship</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Contact</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="tel:+27769079104" class="hover:text-white transition"><i class="fas fa-phone mr-2 text-emerald-400"></i> +27 76 907 9104</a></li>
+                        <li><a href="tel:+27677253057" class="hover:text-white transition"><i class="fas fa-phone mr-2 text-green-400"></i> +27 67 725 3057</a></li>
+                        <li><a href="mailto:altheawilliams3@gmail.com" class="hover:text-white transition"><i class="fas fa-envelope mr-2 text-teal-400"></i> altheawilliams3@gmail.com</a></li>
+                        <li><a href="mailto:alistairdavids@gmail.com" class="hover:text-white transition"><i class="fas fa-envelope mr-2 text-cyan-400"></i> alistairdavids@gmail.com</a></li>
+                        <li><a href="https://www.google.com/maps/place/Pretoria,+South+Africa" target="_blank" class="hover:text-white transition"><i class="fas fa-map-marker-alt mr-2 text-emerald-400"></i> Pretoria, South Africa</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Follow Us</h4>
+                    <div class="flex space-x-3">
+                        <a href="https://www.facebook.com/" target="_blank" class="w-12 h-12 bg-white/10 hover:bg-blue-600 rounded-xl flex items-center justify-center transition"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="https://wa.me/27769079104" target="_blank" class="w-12 h-12 bg-white/10 hover:bg-green-600 rounded-xl flex items-center justify-center transition"><i class="fab fa-whatsapp text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 text-center text-gray-500">
+                <p>&copy; <span id="currentYear"></span> AleKyle Connect. All rights reserved.</p>
+            </div>
+            <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+        </div>
+    </footer>
+
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-close">
+            <i class="fas fa-times text-gray-800 text-2xl"></i>
+        </div>
+        <img id="lightboxImg" src="" alt="Full size image">
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-3xl p-10 max-w-md mx-4 text-center">
+            <div class="w-24 h-24 bg-gradient-to-br from-emerald-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-white text-4xl"></i>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-3">Thank You!</h3>
+            <p class="text-gray-600 mb-8 text-lg">Your parcel pickup request has been received. We'll confirm the details soon!</p>
+            <button onclick="closeModal()" class="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const WA_NUMBER = '27769079104';
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+
+        const courierForm = document.getElementById('courierForm');
+        courierForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = courierForm.querySelector('button[type="submit"]');
+            const prev = btn.innerHTML;
+            let sent = false;
+            btn.disabled = true;
+            btn.innerHTML = 'Sending...';
+
+            // Add a general name field for Web3Forms (helps email formatting)
+            const senderName = (document.getElementById('cSenderName')?.value || '').trim();
+            let nameField = courierForm.querySelector('input[name="name"]');
+            if (!nameField) {
+                nameField = document.createElement('input');
+                nameField.type = 'hidden';
+                nameField.name = 'name';
+                courierForm.appendChild(nameField);
+            }
+            nameField.value = senderName || 'Courier Request';
+
+            // Set reply-to for Web3Forms (optional)
+            const emailVal = (document.getElementById('cEmail')?.value || '').trim();
+            let reply = courierForm.querySelector('input[name="replyto"]');
+            if (!reply) {
+                reply = document.createElement('input');
+                reply.type = 'hidden';
+                reply.name = 'replyto';
+                courierForm.appendChild(reply);
+            }
+            reply.value = emailVal;
+
+            try {
+                const res = await fetch(courierForm.action, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(courierForm)
+                });
+
+                let data = null;
+                try { data = await res.json(); } catch { data = null; }
+
+                if (!res.ok) {
+                    throw new Error((data && data.message) ? data.message : `Request failed (${res.status})`);
+                }
+                if (data && data.success === false) {
+                    throw new Error(data.message || 'Submission failed');
+                }
+
+                sent = true;
+                courierForm.reset();
+            } catch (err) {
+                console.error('Web3Forms error:', err);
+                alert(`Email could not be sent. ${err?.message || ''} Please try again or use WhatsApp.`);
+            } finally {
+                if (sent) {
+                    btn.innerHTML = 'Sent!';
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = prev;
+                    }, 1200);
+                } else {
+                    btn.disabled = false;
+                    btn.innerHTML = prev;
+                }
+            }
+        });
+
+        // WhatsApp quick booking (Courier)
+        document.getElementById('whatsappCourierBtn').addEventListener('click', () => {
+            const senderName = (document.getElementById('cSenderName')?.value || '').trim();
+            const senderPhone = (document.getElementById('cSenderPhone')?.value || '').trim();
+            const pickup = (document.getElementById('cPickup')?.value || '').trim();
+            const recipientName = (document.getElementById('cRecipientName')?.value || '').trim();
+            const recipientPhone = (document.getElementById('cRecipientPhone')?.value || '').trim();
+            const delivery = (document.getElementById('cDelivery')?.value || '').trim();
+            const day = (document.getElementById('cDay')?.value || '').trim();
+            const parcel = (document.getElementById('cParcel')?.value || '').trim();
+
+            const text = [
+                'Hi AleKyle Connect! I need courier service in Pretoria:',
+                senderName ? `Sender: ${senderName}` : 'Sender:',
+                senderPhone ? `Sender Phone: ${senderPhone}` : 'Sender Phone:',
+                pickup ? `Pickup: ${pickup}` : 'Pickup:',
+                recipientName ? `Recipient: ${recipientName}` : 'Recipient:',
+                recipientPhone ? `Recipient Phone: ${recipientPhone}` : 'Recipient Phone:',
+                delivery ? `Delivery: ${delivery}` : 'Delivery:',
+                day ? `Day: ${day}` : 'Day (Fri/Sat/Sun):',
+                parcel ? `Parcel: ${parcel}` : 'Parcel Description:'
+            ].join('\n');
+
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+        });
+
+        // Lightbox
+        function openLightbox(imageSrc) {
+            document.getElementById('lightboxImg').src = imageSrc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Global Book menu (floating button)
+        (function () {
+            if (document.getElementById('globalBookOverlay')) return;
+
+            const html = `
+                <div id="globalBookFab" class="fixed bottom-6 right-6 z-[81]">
+                    <button id="globalBookBtn" type="button" class="btn-premium bg-gradient-to-r from-slate-900 to-slate-800 text-white px-6 py-4 rounded-full font-extrabold text-base shadow-2xl inline-flex items-center">
+                        <i class="fas fa-calendar-check mr-3"></i>
+                        Book
+                    </button>
+                </div>
+
+                <div id="globalBookOverlay" class="fixed inset-0 z-[80] hidden" aria-hidden="true">
+                    <button type="button" data-book-overlay-bg class="absolute inset-0 w-full h-full bg-black/50 backdrop-blur-sm"></button>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                        <div id="globalBookPanel" class="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 transition-all duration-300 ease-out translate-y-10 opacity-0">
+                            <div class="px-6 py-5 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs opacity-80 tracking-widest uppercase">AleKyle Connect</div>
+                                    <div class="text-2xl font-black">Book a Service</div>
+                                </div>
+                                <button id="globalBookClose" type="button" class="w-11 h-11 rounded-2xl bg-white/10 hover:bg-white/20 transition flex items-center justify-center" aria-label="Close booking menu">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <div class="p-6 grid sm:grid-cols-2 gap-4">
+                                <a href="index.html#book" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-shuttle-van"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Shuttle</div>
+                                        <div class="text-sm text-gray-600">Airport, events, tours & more</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-blue-600 transition"></i>
+                                </a>
+
+                                <a href="courier.html#send" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-green-700 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Courier</div>
+                                        <div class="text-sm text-gray-600">Pretoria parcels (Fri–Sun)</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-emerald-600 transition"></i>
+                                </a>
+
+                                <a href="decor.html#quote" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-pink-200 hover:bg-pink-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Decor</div>
+                                        <div class="text-sm text-gray-600">Parties, functions & weddings</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-pink-600 transition"></i>
+                                </a>
+
+                                <a href="mentor.html#book" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Mentorship</div>
+                                        <div class="text-sm text-gray-600">Online teacher guidance</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-orange-600 transition"></i>
+                                </a>
+
+                                <a href="https://wa.me/27769079104" target="_blank" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-green-200 hover:bg-green-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">WhatsApp</div>
+                                        <div class="text-sm text-gray-600">Fastest response</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-green-600 transition"></i>
+                                </a>
+
+                                <a href="home.html#contact" class="group flex items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:border-slate-200 hover:bg-slate-50 transition">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 text-white flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-gray-900">Contact</div>
+                                        <div class="text-sm text-gray-600">Call or send a message</div>
+                                    </div>
+                                    <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-slate-800 transition"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', html);
+
+            const overlay = document.getElementById('globalBookOverlay');
+            const panel = document.getElementById('globalBookPanel');
+            const openBtn = document.getElementById('globalBookBtn');
+            const closeBtn = document.getElementById('globalBookClose');
+            const bgBtn = overlay.querySelector('[data-book-overlay-bg]');
+
+            const open = () => {
+                overlay.classList.remove('hidden');
+                overlay.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    panel.classList.remove('translate-y-10', 'opacity-0');
+                    panel.classList.add('translate-y-0', 'opacity-100');
+                });
+            };
+
+            const close = () => {
+                panel.classList.add('translate-y-10', 'opacity-0');
+                panel.classList.remove('translate-y-0', 'opacity-100');
+                overlay.setAttribute('aria-hidden', 'true');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 220);
+            };
+
+            openBtn.addEventListener('click', open);
+            closeBtn.addEventListener('click', close);
+            bgBtn.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !overlay.classList.contains('hidden')) close();
+            });
+        })();
+    </script>
+</body>
+</html>
